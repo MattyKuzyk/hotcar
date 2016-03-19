@@ -61,7 +61,7 @@ app.post('/twilio.xml', function(req, res) {
       res.end(JSON.stringify(err));
       return;
     }
-    res.status(304);
+    res.status(200);
     res.type('application/xml')
     res.end(data);
   });
@@ -75,7 +75,7 @@ app.post('/babybaby.wav', function(req, res) {
       res.end(JSON.stringify(err));
       return;
     }
-    res.status(304);
+    res.status(200);
     res.type('audio/x-wav')
     res.end(data);
   });
