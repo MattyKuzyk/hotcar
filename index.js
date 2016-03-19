@@ -1,6 +1,7 @@
 var twilio = require('twilio')
 var express = require('express')
 var app = express()
+var fs = require('fs')
 
 var sid = "AC7d19ea7635feb869b7e9d604dbe0b387"
 var secret = process.env.TWILIO
@@ -37,27 +38,45 @@ app.post('/warning-call', function(req, res) {
 
       to:'+12265053154', // Any number Twilio can deliver to
       from: '+17059900308', // A number you bought from Twilio and can use for outbound communication
-      url: 'http://45.55.170.173:1337/twilio.xml' // A URL that produces an XML document (TwiML) which contains instructions for the call
+      url: 'http://45.55.170.173:1337/babybaby.wav' // A URL that produces an XML document (TwiML) which contains instructions for the call
 
   }, function(err, responseData) {
 
       //executed when the call has been initiated.
-      if (err)
+      if (err) {
         console.log(err)
+        res.status(500).send(err)
+      }
       console.log(responseData.from); // outputs "+14506667788"
+      res.status(200).end
 
   });
 })
 
 app.post('/twilio.xml', function(req, res) {
   console.log("Posting to XML")
-  fs.readFile('/public/twilio.xml', function (err,data) {
+  fs.readFile('./public/twilio.xml', function (err,data) {
     if (err) {
       res.writeHead(404);
       res.end(JSON.stringify(err));
       return;
     }
-    res.writeHead(200);
+    res.status(304);
+    res.type('application/xml')
+    res.end(data);
+  });
+})
+
+app.post('/babybaby.wav', function(req, res) {
+  console.log("Posting to wav")
+  fs.readFile('./public/babybaby.wav', function (err,data) {
+    if (err) {
+      res.writeHead(404);
+      res.end(JSON.stringify(err));
+      return;
+    }
+    res.status(304);
+    res.type('audio/x-wav')
     res.end(data);
   });
 })
