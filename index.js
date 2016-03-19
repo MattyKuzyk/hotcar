@@ -33,18 +33,33 @@ app.post('/warning-text', function(req, res) {
 
 app.post('/warning-call', function(req, res) {
   console.log("warning")
- client.makeCall({
+   client.makeCall({
 
-    to:'+12265053154', // Any number Twilio can deliver to
-    from: '+17059900308', // A number you bought from Twilio and can use for outbound communication
-    url: 'http://45.55.170.173:1337/twilio.xml' // A URL that produces an XML document (TwiML) which contains instructions for the call
+      to:'+12265053154', // Any number Twilio can deliver to
+      from: '+17059900308', // A number you bought from Twilio and can use for outbound communication
+      url: 'http://45.55.170.173:1337/twilio.xml' // A URL that produces an XML document (TwiML) which contains instructions for the call
 
-}, function(err, responseData) {
+  }, function(err, responseData) {
 
-    //executed when the call has been initiated.
-    console.log(responseData.from); // outputs "+14506667788"
+      //executed when the call has been initiated.
+      if (err)
+        console.log(err)
+      console.log(responseData.from); // outputs "+14506667788"
 
-});
+  });
+})
+
+app.post('/twilio.xml', function(req, res) {
+  console.log("Posting to XML")
+  fs.readFile('/public/twilio.xml', function (err,data) {
+    if (err) {
+      res.writeHead(404);
+      res.end(JSON.stringify(err));
+      return;
+    }
+    res.writeHead(200);
+    res.end(data);
+  });
 })
 
 console.log("Listening")
