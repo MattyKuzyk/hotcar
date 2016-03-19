@@ -5,7 +5,8 @@ var app = express()
 var sid = "AC7d19ea7635feb869b7e9d604dbe0b387"
 var secret = process.env.TWILIO
 var client = twilio(sid, secret)
-app.post('/warning', function(req, res) {
+app.use(express.static('public'))
+app.post('/warning-text', function(req, res) {
   console.log("warning")
   client.sendMessage({
 
@@ -28,6 +29,22 @@ app.post('/warning', function(req, res) {
       }
 
   });
+})
+
+app.post('/warning-call', function(req, res) {
+  console.log("warning")
+ client.makeCall({
+
+    to:'+12265053154', // Any number Twilio can deliver to
+    from: '+17059900308', // A number you bought from Twilio and can use for outbound communication
+    url: 'http://45.55.170.173:1337/twilio.xml' // A URL that produces an XML document (TwiML) which contains instructions for the call
+
+}, function(err, responseData) {
+
+    //executed when the call has been initiated.
+    console.log(responseData.from); // outputs "+14506667788"
+
+});
 })
 
 console.log("Listening")
