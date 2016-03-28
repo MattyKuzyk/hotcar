@@ -13,7 +13,7 @@ app.post('/warning-text', function(req, res) {
 
     to:'+12265053154', // Any number Twilio can deliver to
     from: '+17059900308', // A number you bought from Twilio and can use for outbound communication
-    body: 'word to your mother.' // body of the SMS message
+    body: 'URGENT: Somebody in your vehicle is in grave danger. Please address this or contact authorities immediately!' // body of the SMS message
 
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
       console.log(responseData)
