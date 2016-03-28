@@ -4,7 +4,7 @@ var app = express()
 var fs = require('fs')
 
 var sid = "AC7d19ea7635feb869b7e9d604dbe0b387"
-var secret = process.env.TWILIO
+var secret = "9d92647c98001316d5dd653c34bb618e"
 var client = twilio(sid, secret)
 app.use(express.static('public'))
 app.post('/warning-text', function(req, res) {
@@ -38,7 +38,7 @@ app.post('/warning-call', function(req, res) {
 
       to:'+12265053154', // Any number Twilio can deliver to
       from: '+17059900308', // A number you bought from Twilio and can use for outbound communication
-      url: 'http://45.55.170.173:1337/babybaby.wav' // A URL that produces an XML document (TwiML) which contains instructions for the call
+      url: 'http://45.55.170.173:1337/recording.wav' // A URL that produces an XML document (TwiML) which contains instructions for the call
 
   }, function(err, responseData) {
 
@@ -67,9 +67,9 @@ app.post('/twilio.xml', function(req, res) {
   });
 })
 
-app.post('/babybaby.wav', function(req, res) {
+app.post('/recording.wav', function(req, res) {
   console.log("Posting to wav")
-  fs.readFile('./public/babybaby.wav', function (err,data) {
+  fs.readFile('./public/recording.wav', function (err,data) {
     if (err) {
       res.writeHead(404);
       res.end(JSON.stringify(err));
