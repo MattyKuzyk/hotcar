@@ -38,7 +38,7 @@ app.post('/warning-call', function(req, res) {
 
       to:'+12265053154', // Any number Twilio can deliver to
       from: '+17059900308', // A number you bought from Twilio and can use for outbound communication
-      url: 'http://45.55.170.173:1337/recording.wav' // A URL that produces an XML document (TwiML) which contains instructions for the call
+      url: 'http://104.236.127.4:1337/recording.wav' // A URL that produces an XML document (TwiML) which contains instructions for the call
 
   }, function(err, responseData) {
 
